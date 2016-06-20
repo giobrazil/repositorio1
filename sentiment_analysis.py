@@ -4,13 +4,13 @@
 # Bacharelado em Sistemas de Informacao
 # IF968 -- Programacao 1
 #
-# Autor:    Fulano de Tal
-#            Beltrano do Cin
+# Autor:    Danillo Rios
+#           Giovanni Veloso
 #
-# Email:    fdt@cin.ufpe.br
-#            bdc@cin.ufpe.br
+# Email:    dlsr@cin.ufpe.br
+#           gvs@cin.ufpe.br
 #
-# Data:        2016-06-10
+# Data:     19/06/2016
 #
 # Descricao:  Este e' um modelo de arquivo para ser utilizado para a implementacao
 #                do projeto pratico da disciplina de Programacao 1. 
@@ -21,7 +21,7 @@
 #                sentimentos de comentarios de filmes postados no site Rotten Tomatoes.
 #
 # Licenca: The MIT License (MIT)
-#            Copyright(c) 2016 Fulano de Tal, Beltrano do Cin
+#            Copyright(c) 2016 Danillo Rios, Giovanni Veloso do Cin
 #
 ###############################################################################
 
@@ -47,8 +47,8 @@ def split_on_separators(original, separators):
         a string original sera quebrada em '^' e '$'.
     '''
 
-    ''' filter é um filtro e recebe como argumento a função e a lista de argumento para
-        ser filtrada. retorna os valores verdadeiros baseado na função fornecida
+    ''' filter Ã© um filtro e recebe como argumento a funÃ§Ã£o e a lista de argumento para
+        ser filtrada. retorna os valores verdadeiros baseado na funÃ§Ã£o fornecida
     '''
     return list(filter(lambda x: len(x) > 1,[clean_up(words) for words in re.split(separators,original) if words not in GetStopWords()]))
                     
@@ -59,8 +59,6 @@ def readTrainingSet(fname):
         e retorna um dicionario com triplas (palavra,freq,escore) com o escore
         medio das palavras no comentarios.
     '''
-        
-    close = 0
     words = dict()
 	# TODO: implementar a funcionalidade aqui
     file = open(fname)
@@ -75,7 +73,6 @@ def readTrainingSet(fname):
                 words[word]['escore'] += escore
             else:
                 words[word] = {'frequencia': 1, 'escore': escore}
-        close += 1
     file.close()
     return words
 
@@ -88,15 +85,12 @@ def readTestSet(fname):
 	retorna um vetor/lista de pares (escore,texto) dos
 	comentarios presentes no arquivo.
     '''
-    count = 0
     reviews = []
     # TODO: implementar a funcionalidade
     file = open(fname)
     for line in file:
         vetor = split_on_separators(line," ")
         reviews.append([line[0],vetor])
-        count += 1
-        
     file.close()
     return reviews
 
@@ -110,7 +104,6 @@ def computeSumSquaredErrors(review,words):
         de treinamento.
     '''
     total = 0.0
-    i = 0
 	# TODO: implementar a funcionalidade
     for lista in review:
         current_sentiment = 0.0
@@ -144,12 +137,8 @@ def main():
     # Lendo conjunto de teste
     reviews = readTestSet(sys.argv[2])
     
-    # Inferindo sentimento e computando soma dos quadrados dos erros
-    #sse = computeSumSquaredErrors(reviews,words)
-    
+    # Inferindo sentimento e computando soma dos quadrados dos erros    
     sse = computeSumSquaredErrors(reviews,words)
-
-    #computeSumSquaredErrors(reviews,words)
     
     print ('A soma do quadrado dos erros e\': {0}'.format(sse))
             
